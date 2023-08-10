@@ -29,6 +29,15 @@
                         <span class="body-medium" v-html="markdown(comment.body)"></span>
                     </div>
                 </div>
+                <div v-show="comment.kind == 'more'" class="list-item-full dpx-16">
+                    <div v-show="comment.depth" class="comment-depth-container">
+                        <div class="comment-depth" v-for="_ in comment.depth">
+                            <div class="comment-depth-line"></div>
+                        </div>
+                    </div>
+                    <span class="body-medium" >Load {{ comment.count }} more comments</span>
+                </div>
+
             </div>
         </div>
     </div>
@@ -83,6 +92,8 @@ async function get_all_replies(comment, depth = 0) {
         replies.push({
             kind: "more",
             children: comment.data.children,
+            count: comment.data.count,
+            depth: depth,
         })
         return replies;
     }
